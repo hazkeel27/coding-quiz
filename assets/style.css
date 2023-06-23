@@ -5,7 +5,7 @@
 }
 
 /*view highscores button styling*/
-.view-highscores{
+button{
     color: darkblue;
     background-color: lightskyblue;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -14,7 +14,7 @@
 }
 
 /*view highscores buttton's hover styling*/
-.view-highscores:hover{
+button:hover{
     background-color: darkblue;
     color: lightskyblue;
 }
@@ -41,4 +41,21 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+
+/*aligns the content section in the middle as it is the main feature of the application*/
+.content-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/*aligning items inside the container div*/
+#container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }

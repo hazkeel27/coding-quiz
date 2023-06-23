@@ -14,14 +14,9 @@
     <p class="align-top-right timer">Time Left: <span class="time-left">0</span></p>
 
     <!--section tag includes all content for the quiz-->
-    <section>
-        <h1 class="main-header"></h1>
+    <section class="content-section">
 
-        <div class="container">
-
-
-
-        </div>
+        <div id="container"></div>
 
     </section>
 
@@ -53,5 +48,32 @@
     All pages include the a button on top right and timer on top left
 
     Logic:
-    - 
+    
+    On page initialization
+    - h1 is edited
+    - p, and button tag's are created and appended to container
+    
+    On 'Start Quiz' click event
+    - h1 is cleared and edited
+    - p and button tags are deleted
+    - a parent div is created for the ol with class 'options'
+    - ol, 4 li, and buttons are created and appended to container
+    - a hidden p tag is created and only showed once an answer is chosen
+    - when answer is clicked, next question is displayed
+    - save score
+
+    - timer variable is created outside functions. It countsdown from 75sec and subtracts 15sec 
+      if the incorrect answer is chosen
+    
+    After Final Question Answered
+    - h1 is cleared and edited
+    - ol, 4 li buttons, and hidden p tags are deleted
+    - a p, label, text area, and button tags are created and appended
+    - Initials and score are saved in local storage
+
+    On 'Submit' or 'View Highscores' button click event
+    - h1 is cleared and edited
+    - p, label, text area, and button tags are deleted
+    - local storage values are appended to an ol with initials and scores
+    - two buttons are created and appended
 -->
