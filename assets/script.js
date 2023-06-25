@@ -120,7 +120,7 @@ function init(){
                 var secondQuestion = document.createElement('div');
 
                 //h1 tag is edited, and appended
-                mainHeader.textContent = 'Arrays in JavaScript can be used to store _________';
+                mainHeader.textContent = 'Arrays in JavaScript can be used to store _________.';
                 secondQuestion.appendChild(mainHeader);  
 
                 //answer options are added to button tag's text content
@@ -164,7 +164,79 @@ function init(){
 
 
 
-               
+               // function runs on answer button click event and takes user to question 3
+                secondQuestion.addEventListener('click', function(event){
+
+                event.stopPropagation();
+
+                var secondAnswer = event.target;
+
+                //checks if the button element is clicked
+                if (secondAnswer.matches('button')){
+
+                    //the button's text content is assigned to variable
+                    secondAnswer = secondAnswer.textContent;
+                    
+                    console.log(secondAnswer);
+
+                    //checks the answer and appends the result
+                    if (secondAnswer === 'all of the above'){
+                        result.textContent = 'Correct';
+                    }
+                    else{
+                        result.textContent = 'Incorrect';
+                    }
+                    
+                    //firstQuestion div's child elements are cleared
+                    secondQuestion.innerHTML = '';
+
+                    //new div for the second question is created within firstQuestion div
+                    var thirdQuestion = document.createElement('div');
+
+                    //h1 tag is edited, and appended
+                    mainHeader.textContent = 'The condition in an if / else statement is enclosed within _________.';
+                    thirdQuestion.appendChild(mainHeader);  
+
+                    //answer options are added to button tag's text content
+                    answerButton1.textContent = 'quotes';
+                    answerButton2.textContent = 'curly brackets';
+                    answerButton3.textContent = 'parentheses';
+                    answerButton4.textContent = 'square brackets';
+
+                    //button tags are appended to the li tags
+                    listItem1.appendChild(answerButton1);
+                    listItem2.appendChild(answerButton2);
+                    listItem3.appendChild(answerButton3);
+                    listItem4.appendChild(answerButton4);
+
+                    //li tags are appended to ol tag
+                    orderedList.appendChild(listItem1);
+                    orderedList.appendChild(listItem2);
+                    orderedList.appendChild(listItem3);
+                    orderedList.appendChild(listItem4);
+
+                    //ol tag is appended to thirdQuestion div
+                    thirdQuestion.appendChild(orderedList); 
+
+                    //result of the second question is appended
+                    thirdQuestion.appendChild(result);
+
+                    //shows the result on screen for 2 seconds
+                    resultSeconds = 2;
+                    resultTimer = setInterval(function(){
+                        resultSeconds--;
+                        if (resultSeconds === 0){
+                            clearInterval(resultTimer);
+                            result.textContent = '';
+                        }
+                    }, 1000);
+
+                    //thirdQuestion div is appended to secondQuestion div
+                    secondQuestion.appendChild(thirdQuestion);
+
+
+                } //if the button element is clicked ends
+            }); //question 3 code ends
 
 
 
