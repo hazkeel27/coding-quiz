@@ -35,7 +35,7 @@ function init(){
         var timerInterval = setInterval(function(){
             timeLeft.textContent = seconds + 's';
             seconds--;
-            if (seconds === 0){
+            if (seconds < 0){
                 clearInterval(timerInterval);
             }
         }, 1000);
@@ -113,6 +113,7 @@ function init(){
                 }
                 else{
                     result.textContent = 'Incorrect';
+                    seconds -= 15;
                 }
                 
                 //result's visuals are edited
@@ -187,6 +188,7 @@ function init(){
                     }
                     else{
                         result.textContent = 'Incorrect';
+                        seconds -= 15;
                     }
                     
                     //secondQuestion div's child elements are cleared
@@ -258,6 +260,7 @@ function init(){
                         }
                         else{
                             result.textContent = 'Incorrect';
+                            seconds -= 15;
                         }
                         
                         //thirdQuestion div's child elements are cleared
@@ -329,6 +332,7 @@ function init(){
                             }
                             else{
                                 result.textContent = 'Incorrect';
+                                seconds -= 15;
                             }
                             
                             //fourthQuestion div's child elements are cleared
@@ -397,7 +401,7 @@ function init(){
 function viewHighscores(event){
     event.stopPropagation();
 
-    
+
 }
 
 //init() function is executed on page load
