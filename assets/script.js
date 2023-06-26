@@ -3,7 +3,6 @@ var viewHighscores = document.querySelector(".view-highscores");
 var timeLeft = document.querySelector(".time-left");
 var container = document.querySelector("#container");
 
-
 //init fuction runs on page load
 function init(){
 
@@ -333,6 +332,10 @@ function init(){
                             else{
                                 result.textContent = 'Incorrect';
                                 seconds -= 15;
+
+                                if (seconds < 0){
+                                    seconds = 0;
+                                }
                             }
                             
                             //fourthQuestion div's child elements are cleared
@@ -357,9 +360,9 @@ function init(){
                             var initialsInput = document.createElement('input');
                             userInitials.appendChild(initialsInput);
 
-                            var initialsButton = document.createElement('button');
-                            initialsButton.textContent = 'Submit';
-                            userInitials.appendChild(initialsButton);
+                            var submitButton = document.createElement('button');
+                            submitButton.textContent = 'Submit';
+                            userInitials.appendChild(submitButton);
 
                             //result of the second question is appended
                             userInitials.appendChild(result);
@@ -376,10 +379,58 @@ function init(){
 
                             //userInitials div is appended to fourthQuestion div
                             fourthQuestion.appendChild(userInitials);
-
+                            
+                            //click event is initiated once user clicks submit on initials page
                             userInitials.addEventListener('click', function(event){
-                                viewHighscores(event);
-                            });
+
+                                event.stopPropagation();
+
+                                var initialsPage = event.target;
+
+                                //score and initials are stored in an object
+                                var inputValue = initialsInput.value;
+                                var storeScores = {
+                                    score: score,
+                                    initials: inputValue
+                                };
+
+                                //the object is pushed to an array
+                                var scoresArray = [];
+                                scoresArray.push(storeScores);
+
+                                //array is stored in localStorage
+                                localStorage.setItem('scoresArray', JSON.stringify(scoresArray));
+        
+                                //checks if the button element is clicked
+                                if (initialsPage.matches('button')){
+
+                                    //user initials page div's innerHTML is cleared
+                                    userInitials.innerHTML = '';
+
+                                    var viewScoresDiv = document.createElement('div');
+
+                                    //h1 tag is edited, and appended
+                                    mainHeader.textContent = 'Highscores';
+                                    userInitials.appendChild(mainHeader);
+
+                                    //storedArray includes the objects with user's score and initials as properties
+                                    var storedArray = JSON.parse(localStorage.getItem('scoresArray'));
+
+                                    var scoreList = document.createElement('ol');
+
+                                    for (var i = 0; i < storedArray.length; i++) {
+                                        var listItem = document.createElement('li');
+                                        listItem.textContent = storedArray[i].initials + ' - ' + storedArray[i].score;
+                                        scoreList.appendChild(listItem);
+                                    }
+
+                                    //ol tag is appended to viewScoresDiv div
+                                    viewScoresDiv.appendChild(scoreList);
+                                    
+                                    //viewScoresDiv div is appended to userInitials div
+                                    userInitials.appendChild(viewScoresDiv);
+                                } //if the button element is clicked ends
+                            }); // view highscores page ends
                             
                             } //if the button element is clicked ends
                         }); //user initials page code ends
@@ -396,13 +447,7 @@ function init(){
     }); //start button click event and question 1 code ends
 } //init() ends
 
-//function edits/adds new tags to display user scores which are saved in local storage.
-//if user has not done the quiz then it displays nothing
-function viewHighscores(event){
-    event.stopPropagation();
 
-
-}
 
 //init() function is executed on page load
 init();
