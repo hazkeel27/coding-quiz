@@ -6,6 +6,10 @@ var container = document.querySelector("#container");
 
 //init fuction runs on page load
 function init(){
+
+    //as the user is quized, score is incremented if user answers correctly
+    var score = 0;
+
     //h1 tag is created, edited, and appended to the container
     var mainHeader = document.createElement('h1');
     mainHeader.textContent = 'Coding Quiz Challenge';
@@ -39,7 +43,7 @@ function init(){
         //container's child elements are cleared
         container.innerHTML = '';
 
-        //new div for the first question is created within container div
+        //new div for the first question is created
         var firstQuestion = document.createElement('div');
 
         //h1 tag is created, edited, and appended
@@ -105,6 +109,7 @@ function init(){
                 //checks the answer and appends the result
                 if (firstAnswer === 'quotes'){
                     result.textContent = 'Correct';
+                    score++;
                 }
                 else{
                     result.textContent = 'Incorrect';
@@ -116,7 +121,7 @@ function init(){
                 //firstQuestion div's child elements are cleared
                 firstQuestion.innerHTML = '';
 
-                //new div for the second question is created within firstQuestion div
+                //new div for the second question is created
                 var secondQuestion = document.createElement('div');
 
                 //h1 tag is edited, and appended
@@ -178,6 +183,7 @@ function init(){
                     //checks the answer and appends the result
                     if (secondAnswer === 'all of the above'){
                         result.textContent = 'Correct';
+                        score++;
                     }
                     else{
                         result.textContent = 'Incorrect';
@@ -186,7 +192,7 @@ function init(){
                     //secondQuestion div's child elements are cleared
                     secondQuestion.innerHTML = '';
 
-                    //new div for the second question is created within firstQuestion div
+                    //new div for the third question is created
                     var thirdQuestion = document.createElement('div');
 
                     //h1 tag is edited, and appended
@@ -230,11 +236,6 @@ function init(){
                     //thirdQuestion div is appended to secondQuestion div
                     secondQuestion.appendChild(thirdQuestion);
 
-
-
-
-
-
                     // function runs on answer button click event and takes user to question 4
                     thirdQuestion.addEventListener('click', function(event){
 
@@ -253,6 +254,7 @@ function init(){
                         //checks the answer and appends the result
                         if (thirdAnswer === 'curly brackets'){
                             result.textContent = 'Correct';
+                            score++;
                         }
                         else{
                             result.textContent = 'Incorrect';
@@ -261,7 +263,7 @@ function init(){
                         //thirdQuestion div's child elements are cleared
                         thirdQuestion.innerHTML = '';
     
-                        //new div for the second question is created within firstQuestion div
+                        //new div for the fourth question is created
                         var fourthQuestion = document.createElement('div');
     
                         //h1 tag is edited, and appended
@@ -304,20 +306,83 @@ function init(){
     
                         //fourthQuestion div is appended to thirdQuestion div
                         thirdQuestion.appendChild(fourthQuestion);
-    
-    
+
+                        // function runs on answer button click event and takes user to user initials page
+                        fourthQuestion.addEventListener('click', function(event){
+
+                        event.stopPropagation();
+
+                        var fourthAnswer = event.target;
+
+                        //checks if the button element is clicked
+                        if (fourthAnswer.matches('button')){
+
+                            //the button's text content is assigned to variable
+                            fourthAnswer = fourthAnswer.textContent;
+                            
+                            console.log(fourthAnswer);
+
+                            //checks the answer and appends the result
+                            if (fourthAnswer === 'alerts'){
+                                result.textContent = 'Correct';
+                                score++;
+                            }
+                            else{
+                                result.textContent = 'Incorrect';
+                            }
+                            
+                            //fourthQuestion div's child elements are cleared
+                            fourthQuestion.innerHTML = '';
+
+                            //new div for the user initials page is created
+                            var userInitials = document.createElement('div');
+
+                            //h1 tag is edited, and appended
+                            mainHeader.textContent = 'All done!';
+                            userInitials.appendChild(mainHeader);  
+
+                            //displays the user the score in a paragraph tag
+                            paragraphElement.textContent = 'Your final score is ' + score + '.';
+                            userInitials.appendChild(paragraphElement);
+
+                            //lable, input, and button tags are created to submit user initials
+                            var initialsLable = document.createElement('lable');
+                            initialsLable.textContent = 'Enter Initials: ';
+                            userInitials.appendChild(initialsLable);
+
+                            var initialsInput = document.createElement('input');
+                            userInitials.appendChild(initialsInput);
+
+                            var initialsButton = document.createElement('button');
+                            initialsButton.textContent = 'Submit';
+                            userInitials.appendChild(initialsButton);
+
+                            //result of the second question is appended
+                            userInitials.appendChild(result);
+
+                            //shows the result on screen for 2 seconds
+                            resultSeconds = 2;
+                            resultTimer = setInterval(function(){
+                                resultSeconds--;
+                                if (resultSeconds === 0){
+                                    clearInterval(resultTimer);
+                                    result.textContent = '';
+                                }
+                            }, 1000);
+
+                            //userInitials div is appended to fourthQuestion div
+                            fourthQuestion.appendChild(userInitials);
+
+                            userInitials.addEventListener('click', function(event){
+                                viewHighscores(event);
+                            });
+                            
+                            } //if the button element is clicked ends
+                        }); //user initials page code ends
+
                     } //if the button element is clicked ends
                 }); //question 4 code ends
                 
-
-
-
-
-
-
-
-
-
                 } //if the button element is clicked ends
             }); //question 3 code ends
 
@@ -326,6 +391,14 @@ function init(){
 
     }); //start button click event and question 1 code ends
 } //init() ends
+
+//function edits/adds new tags to display user scores which are saved in local storage.
+//if user has not done the quiz then it displays nothing
+function viewHighscores(event){
+    event.stopPropagation();
+
+    
+}
 
 //init() function is executed on page load
 init();
