@@ -40,4 +40,4 @@ Users are welcome to clone my repository and re-write my application in a more e
 Due to a limited number of inputs users can try different variations of clicking on buttons. Besides that, the only way to test the application is by doing the quiz.
 
 ## Deployed Application 
-
+https://hazkeel27.github.io/coding-quiz/
