@@ -331,20 +331,17 @@ function init(){
                             }
                             else{
                                 result.textContent = 'Incorrect';
-                                seconds -= 15;
-
-                                if (seconds < 0){
-                                    seconds = 0;
-                                }
                             }
+                            seconds = 0;
                             
                             //fourthQuestion div's child elements are cleared
                             fourthQuestion.innerHTML = '';
 
                             //new div for the user initials page is created
-                            var userInitials = document.createElement('div');
+                            var userInitials = document.createElement('div'); // return this
 
                             //h1 tag is edited, and appended
+                            mainHeader = document.createElement('h1');
                             mainHeader.textContent = 'All done!';
                             userInitials.appendChild(mainHeader);  
 
@@ -352,11 +349,12 @@ function init(){
                             paragraphElement.textContent = 'Your final score is ' + score + '.';
                             userInitials.appendChild(paragraphElement);
 
+
                             //lable, input, and button tags are created to submit user initials
                             var initialsLable = document.createElement('lable');
                             initialsLable.textContent = 'Enter Initials: ';
                             userInitials.appendChild(initialsLable);
-
+                        
                             var initialsInput = document.createElement('input');
                             userInitials.appendChild(initialsInput);
 
@@ -380,7 +378,7 @@ function init(){
                             //userInitials div is appended to fourthQuestion div
                             fourthQuestion.appendChild(userInitials);
                             
-                            //click event is initiated once user clicks submit on initials page
+                            //function runs on submit button click event and takes user to user view highscores page
                             userInitials.addEventListener('click', function(event){
 
                                 event.stopPropagation();
@@ -407,28 +405,8 @@ function init(){
                                     //user initials page div's innerHTML is cleared
                                     userInitials.innerHTML = '';
 
-                                    var viewScoresDiv = document.createElement('div');
-
-                                    //h1 tag is edited, and appended
-                                    mainHeader.textContent = 'Highscores';
-                                    userInitials.appendChild(mainHeader);
-
-                                    //storedArray includes the objects with user's score and initials as properties
-                                    var storedArray = JSON.parse(localStorage.getItem('scoresArray'));
-
-                                    var scoreList = document.createElement('ol');
-
-                                    for (var i = 0; i < storedArray.length; i++) {
-                                        var listItem = document.createElement('li');
-                                        listItem.textContent = storedArray[i].initials + ' - ' + storedArray[i].score;
-                                        scoreList.appendChild(listItem);
-                                    }
-
-                                    //ol tag is appended to viewScoresDiv div
-                                    viewScoresDiv.appendChild(scoreList);
+                                    btnViewHighScores();
                                     
-                                    //viewScoresDiv div is appended to userInitials div
-                                    userInitials.appendChild(viewScoresDiv);
                                 } //if the button element is clicked ends
                             }); // view highscores page ends
                             
@@ -447,6 +425,62 @@ function init(){
     }); //start button click event and question 1 code ends
 } //init() ends
 
+function btnViewHighScores()
+{   
+    //container div is cleared
+    container.innerHTML = '';
+
+    // new div is created to view scores
+    var viewScoresDiv = document.createElement('div');
+
+    //h1 tag is edited, and appended
+    var mainHeader = document.createElement('h1');
+    mainHeader.textContent = 'Highscores';
+    viewScoresDiv.appendChild(mainHeader);
+
+    //storedArray includes the objects with user's score and initials as properties
+    var storedArray = JSON.parse(localStorage.getItem('scoresArray'));
+
+    var scoreList = document.createElement('ol');
+
+    if (storedArray !== null){
+        //local storage values are appended to an ordered list
+        for (var i = 0; i < storedArray.length; i++) {
+            var listItem = document.createElement('li');
+            listItem.textContent = storedArray[i].initials + ' - ' + storedArray[i].score;
+            scoreList.appendChild(listItem);
+        }
+        //ol tag is appended to viewScoresDiv div
+        viewScoresDiv.appendChild(scoreList);
+    }
+    
+    //Go Back Button 
+    var goBackBtn = document.createElement('button');
+    goBackBtn.textContent = 'Go Back';
+    viewScoresDiv.appendChild(goBackBtn);
+
+    //Clear Local Storage Data button
+    var clearDataBtn = document.createElement('button');
+    clearDataBtn.textContent = 'Clear Highscores';
+    viewScoresDiv.appendChild(clearDataBtn);
+
+    goBackBtn.addEventListener('click', function(){
+        viewScoresDiv.innerHTML = '';
+        init();
+    });
+
+    clearDataBtn.addEventListener('click', function(){
+        localStorage.clear();
+        scoreList.innerHTML = '';
+        viewScoresDiv.appendChild(scoreList);
+    });
+    
+    //viewScoresDiv div is appended to userInitials div
+    container.appendChild(viewScoresDiv);
+}
+
+//click event of the view highscores button
+viewHighscores.addEventListener('click', btnViewHighScores);
 
 
 //init() function is executed on page load
